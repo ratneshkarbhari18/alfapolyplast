@@ -38,7 +38,7 @@ class Authentication extends BaseController
                         "logged_in" => TRUE
                     );
                     $session->set($sessionData); 
-                    return redirect()->to(site_url("admin-dashboard")); 
+                    return redirect()->to(site_url("dashboard")); 
                 } else {
                     $pageLoader->admin_login("Password is incorrect");
                 }

@@ -27,7 +27,7 @@
                     
                     </div>
 
-                    <button type="submit" style="margin: 3% 0;" class="btn btn-success">Login</button>
+                    <button type="submit" style="margin: 3% 0;" class="btn btn-success btn-block">Login</button>
                 
                 </form>
             

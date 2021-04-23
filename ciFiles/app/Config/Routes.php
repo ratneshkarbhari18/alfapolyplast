@@ -38,6 +38,15 @@ $routes->get("admin-login","PageLoader::admin_login");
 // Authentication
 $routes->post("admin-login-exe","Authentication::admin_login");
 
+// Admin Pages
+$routes->get("dashboard","PageLoader::dashboard");
+$routes->get("manage-categories","PageLoader::manage_categories");
+$routes->get("add-category","PageLoader::add_category");
+
+// Category Routes
+$routes->post("add-category-exe","Categories::add_category");
+
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing

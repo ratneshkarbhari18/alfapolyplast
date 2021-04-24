@@ -7,7 +7,20 @@ use App\Controllers\PageLoader;
 class Categories extends BaseController
 {
 
-    public function add_category(){
+
+	public function auth_checker(){
+		$session = session();
+		$role = $session->get("role");
+		if ($role!="admin") {
+			return redirect()->to(site_url("admin-login")); 
+		}
+	}
+
+    public function add(){
+
+
+        $this->auth_checker();
+        
 
         $pageLoader = new PageLoader();
         $categoryModel = new CategoryModel();
@@ -53,6 +66,8 @@ class Categories extends BaseController
     }
 
     public function update(){
+
+        $this->auth_checker();
 
         $catId = $this->request->getPost("id");
         
@@ -102,4 +117,20 @@ class Categories extends BaseController
         }
 
     }
+
+    public function delete(){
+        $this->auth_checker();
+        $catId = $this->request->getPost("id");
+        $categoryModel = new CategoryModel();
+        $prevCatDetails = $categoryModel->find($catId);
+        $deleted = $categoryModel->delete($catId);
+        $pageLoader = new PageLoader();
+        if ($deleted) {
+            unlink("./assets/images/category_featured/".$prevCatDetails["featured_image"]);
+            $pageLoader->manage_categories("Category Deleted","");
+        } else {
+            $pageLoader->manage_categories("","Category not deleted");
+        }        
+    }
+
 }

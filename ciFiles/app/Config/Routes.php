@@ -45,8 +45,9 @@ $routes->get("add-category","PageLoader::add_category");
 $routes->get("edit-category/(:any)","PageLoader::edit_category/$1");
 
 // Category Routes
-$routes->post("add-category-exe","Categories::add_category");
+$routes->post("add-category-exe","Categories::add");
 $routes->post("update-category-exe","Categories::update");
+$routes->post("delete-category-exe","Categories::delete");
 
 
 /*

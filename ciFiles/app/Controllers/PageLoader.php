@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controllers;
+use App\Models\CategoryModel;
 
 class PageLoader extends BaseController
 {
@@ -42,12 +43,21 @@ class PageLoader extends BaseController
 	}
 	public function manage_categories($success="",$error=""){
 		$this->auth_checker();
-		$data = array("title"=>"Manage Categories","success"=>$success,"error"=>$error);
+		$categoryModel = new CategoryModel();
+        $categories = $categoryModel->findAll();
+		$data = array("title"=>"Manage Categories","success"=>$success,"error"=>$error,"categories"=>$categories);
 		$this->admin_page_loader("manage_categories",$data);
 	}
 	public function add_category($success="",$error=""){
 		$this->auth_checker();
 		$data = array("title"=>"Add Category","success"=>$success,"error"=>$error);
 		$this->admin_page_loader("add_category",$data);
+	}
+	public function edit_category($slug,$success="",$error=""){
+		$this->auth_checker();
+        $categoryModel = new CategoryModel();
+		$category = $categoryModel->where("slug",$slug)->first();
+		$data = array("title"=>"Edit Category","success"=>$success,"error"=>$error,"category"=>$category);
+		$this->admin_page_loader("edit_category",$data);
 	}
 }

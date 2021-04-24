@@ -42,9 +42,11 @@ $routes->post("admin-login-exe","Authentication::admin_login");
 $routes->get("dashboard","PageLoader::dashboard");
 $routes->get("manage-categories","PageLoader::manage_categories");
 $routes->get("add-category","PageLoader::add_category");
+$routes->get("edit-category/(:any)","PageLoader::edit_category/$1");
 
 // Category Routes
 $routes->post("add-category-exe","Categories::add_category");
+$routes->post("update-category-exe","Categories::update");
 
 
 /*

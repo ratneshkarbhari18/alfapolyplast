@@ -16,6 +16,16 @@
                 <input class="form-control" type="text" name="slug" id="slug">
             </div>
             <div class="form-group">
+                <label for="category">Category</label>
+
+                <select name="category" id="category" class="form-control">
+                    <?php foreach($categories as $category): ?>
+                    <option value="<?php echo $category["id"]; ?>"><?php echo $category["title"]; ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+
+            <div class="form-group">
                 <label for="price_in">India Price</label>
                 <input class="form-control" type="text" name="price_in" id="price_in">
             </div>
@@ -64,7 +74,7 @@
                 <textarea name="description" id="description" class="form-control"></textarea>
             </div>
             <br>
-            <button type="submit" class="btn btn-success"> Add Category </button>
+            <button type="submit" class="btn btn-success"> Add Product </button>
 
         </form>
         

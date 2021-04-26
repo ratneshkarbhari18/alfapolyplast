@@ -9,7 +9,7 @@ class ProductModel extends Model
 
     protected $primaryKey = 'id';
 
-    protected $allowedFields = ['title','slug','description','featured_image','gallery_images','prices'];
+    protected $allowedFields = ['title','slug','category','description','featured_image','gallery_images','prices'];
 
 
 }

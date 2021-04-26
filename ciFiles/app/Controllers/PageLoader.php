@@ -73,7 +73,16 @@ class PageLoader extends BaseController
 		$this->auth_checker();
 		$categoryModel = new CategoryModel();
 		$allCategories = $categoryModel->findAll();
-		$data = array("title"=>"Add Product","success"=>$success,"error"=>$error);
+		$data = array("title"=>"Add Product","success"=>$success,"error"=>$error,"categories"=>$allCategories);
 		$this->admin_page_loader("add_product",$data);
+	}
+	public function edit_product($slug,$success="",$error=""){
+		$this->auth_checker();
+        $productModel = new ProductModel();
+		$categoryModel = new CategoryModel();
+		$allCategories = $categoryModel->findAll();
+		$product = $productModel->where("slug",$slug)->first();
+		$data = array("title"=>"Edit product","success"=>$success,"error"=>$error,"product"=>$product,"categories"=>$allCategories);
+		$this->admin_page_loader("edit_product",$data);
 	}
 }

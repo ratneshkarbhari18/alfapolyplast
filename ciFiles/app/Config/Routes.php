@@ -45,6 +45,7 @@ $routes->get("add-category","PageLoader::add_category");
 $routes->get("edit-category/(:any)","PageLoader::edit_category/$1");
 $routes->get("manage-products","PageLoader::manage_products");
 $routes->get("add-product","PageLoader::add_product");
+$routes->get("edit-product/(:any)","PageLoader::edit_product/$1");
 
 // Category Routes
 $routes->post("add-category-exe","Categories::add");
@@ -53,6 +54,7 @@ $routes->post("delete-category-exe","Categories::delete");
 
 // Product Routes
 $routes->post("add-product-exe","Products::add");
+$routes->post("update-product-exe","Products::update");
 
 
 /*

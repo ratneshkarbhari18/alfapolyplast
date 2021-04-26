@@ -43,7 +43,7 @@ class Products extends BaseController
 
                 $featuredImageRandomName = $featuredImage->getRandomName();
     
-                $featuredImage->move('assets/images/category_featured', $featuredImageRandomName);
+                $featuredImage->move('assets/images/product_featured', $featuredImageRandomName);
 
             }else {
                 $featuredImageRandomName = "noimage.png";
@@ -81,6 +81,7 @@ class Products extends BaseController
             $objToInsert = array(
                 "title" => $this->request->getPost("title"),
                 "slug" => $slug,
+                "category" => $this->request->getPost("category"),
                 "description" => $this->request->getPost("description"),
                 "featured_image" => $featuredImageRandomName,
                 "gallery_images" => $galleryImageNamesJson,
@@ -100,14 +101,14 @@ class Products extends BaseController
 
         $this->auth_checker();
 
-        $catId = $this->request->getPost("id");
+        $prodId = $this->request->getPost("id");
         
 
         $pageLoader = new PageLoader();
-        $categoryModel = new CategoryModel();
+        $productModel = new ProductModel();
 
 
-        $prevCatDetails = $categoryModel->find($catId);
+        $prevProdDetails = $productModel->find($prodId);
 
         if ($this->request->getPost("slug")) {
             $slug = url_title($this->request->getPost("slug"),"-",TRUE);    
@@ -115,10 +116,10 @@ class Products extends BaseController
             $slug = url_title($this->request->getPost("title"),"-",TRUE);    
         }
         
-        $categoryExists = $categoryModel->where('slug',$slug)->first();
+        $productExists = $productModel->where('slug',$slug)->first();
 
-        if ($categoryExists&&$categoryExists["id"]!=$catId) {
-            $pageLoader->add_category("","This slug already exists");
+        if ($productExists&&$productExists["id"]!=$prodId) {
+            $pageLoader->add_product("","This slug already exists");
         } else {
 
             $featuredImage = $this->request->getFile('featured_image');
@@ -127,23 +128,66 @@ class Products extends BaseController
 
                 $featuredImageRandomName = $featuredImage->getRandomName();
     
-                $featuredImage->move('assets/images/category_featured', $featuredImageRandomName);
+                $featuredImage->move('assets/images/product_featured', $featuredImageRandomName);
 
             }else {
-                $featuredImageRandomName = $prevCatDetails["featured_image"];
+                $featuredImageRandomName = $prevProdDetails["featured_image"];
             }
 
-            $objToInsert = array(
+
+            $galleryImageNames = array();
+
+            $galleryImages = $this->request->getFilemULTIPLE('gallery_images');
+
+			foreach ($galleryImages as $galleryImage) {
+
+
+                if(!$galleryImage->isValid()){
+                    $galleryImageNamesJson = $prevProdDetails['gallery_images'];
+                    break;
+                }
+
+				$galleryImageRandomName = $galleryImage->getRandomName();
+
+				$galleryImage->move('assets/images/gallery_product', $galleryImageRandomName);
+
+				$galleryImageNames[] = $galleryImageRandomName;
+
+			}
+
+            if(!empty($galleryImageNames)){
+                $galleryImageNamesJson = json_encode($galleryImageNames);
+            }else {
+                $galleryImageNamesJson = $prevProdDetails["gallery_images"];
+            }
+
+            $pricingObj = array(
+                "na" => $this->request->getPost("price_na"),
+                "in" => $this->request->getPost("price_in"),
+                "sa" => $this->request->getPost("price_sa"),
+                "au" => $this->request->getPost("price_au"),
+                "uk" => $this->request->getPost("price_uk"),
+                "jp" => $this->request->getPost("price_jp"),
+                "saf" => $this->request->getPost("price_saf"),
+                "eu" => $this->request->getPost("price_eu")
+            );
+
+            $pricesJson = json_encode($pricingObj);
+
+            $objToUpdate = array(
                 "title" => $this->request->getPost("title"),
                 "slug" => $slug,
+                "category" => $this->request->getPost("category"),
                 "description" => $this->request->getPost("description"),
-                "featured_image" => $featuredImageRandomName
+                "featured_image" => $featuredImageRandomName,
+                "gallery_images" => $galleryImageNamesJson,
+                "prices" => $pricesJson
             );  
 
-            if ($categoryModel->update($catId,$objToInsert)) {
-                $pageLoader->edit_category($slug,"Category Added Successfully","");
+            if ($productModel->update($prodId,$objToUpdate)) {
+                $pageLoader->edit_product($slug,"Product updated Successfully","");
             } else {
-                $pageLoader->edit_category($prevCatDetails["slug"],"","Category Not added");
+                $pageLoader->edit_product($slug,"","Product Not updated");
             }
         }
 
@@ -152,9 +196,9 @@ class Products extends BaseController
     public function delete(){
         $this->auth_checker();
         $catId = $this->request->getPost("id");
-        $categoryModel = new CategoryModel();
-        $prevCatDetails = $categoryModel->find($catId);
-        $deleted = $categoryModel->delete($catId);
+        $productModel = new ProductModel();
+        $prevProdDetails = $productModel->find($catId);
+        $deleted = $productModel->delete($catId);
         $pageLoader = new PageLoader();
         if ($deleted) {
             unlink("./assets/images/category_featured/".$prevCatDetails["featured_image"]);

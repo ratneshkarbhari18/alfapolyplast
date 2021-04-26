@@ -32,12 +32,15 @@ $routes->setAutoRoute(true);
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
+
+// Site Page Routes
 $routes->get('/', 'PageLoader::home');
 $routes->get("admin-login","PageLoader::admin_login");
+$routes->get("product/(:any)","PageLoader::product/$1");
 
 // Authentication
 $routes->post("admin-login-exe","Authentication::admin_login");
-$routes->post("logout","Authentication::logout");
+$routes->get("logout","Authentication::logout");
 
 // Admin Pages
 $routes->get("dashboard","PageLoader::dashboard");

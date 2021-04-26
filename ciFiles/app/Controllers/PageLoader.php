@@ -8,6 +8,9 @@ class PageLoader extends BaseController
 {
 
 	private function page_loader($viewName,$data){
+		$categoryModel = new CategoryModel();
+		$allCategories = $categoryModel->findAll();
+		$data["allCategories"] = $allCategories;
 		echo view("templates/header",$data);
 		echo view("pages/".$viewName,$data);
 		echo view("templates/footer",$data);
@@ -27,16 +30,31 @@ class PageLoader extends BaseController
 		}
 	}
 
+	// Public Pages
 	public function home()
 	{
-		$data = array("title"=>"Tagline");
+		$productModel = new ProductModel();
+		$allProducts = $productModel->findAll();
+		$data = array("title"=>"Tagline","products"=>$allProducts);
 		$this->page_loader("home",$data);
 	}
+
+	public function product($slug)
+	{
+		$productModel = new ProductModel();
+		$focusProduct = $productModel->where("slug",$slug)->first();
+		$data = array("title"=>$focusProduct["title"],"focusProduct"=>$focusProduct);
+		$this->page_loader("product",$data);
+	}
+
 	public function admin_login($error="")
 	{
 		$data = array("title"=>"Admin Login","error" => $error);
 		$this->page_loader("adminLogin",$data);
 	}
+
+
+	// Admin Pages
 	public function dashboard(){
 		$this->auth_checker();
 		$data = array("title"=>"Dashboard");
@@ -68,7 +86,6 @@ class PageLoader extends BaseController
 		$data = array("title"=>"Manage Products","success"=>$success,"error"=>$error,"products"=>$products);
 		$this->admin_page_loader("manage_products",$data);		
 	}
-
 	public function add_product($success="",$error=""){
 		$this->auth_checker();
 		$categoryModel = new CategoryModel();

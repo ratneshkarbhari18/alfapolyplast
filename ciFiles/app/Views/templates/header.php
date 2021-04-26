@@ -72,24 +72,11 @@
                                 <nav class="tm-header-nav">
                                     <ul>
                                         <li><a href="index.php">Home</a></li>
-                                        <li><a href="about.php">About Us</a></li>
-                                        <li class="tm-header-nav-dropdown"><a href="#">Printed Bags</a>
+                                        <li class="tm-header-nav-dropdown"><a href="#">Categories</a>
                                             <ul>  
-                                                <li><a href="printedadhesive.php">Adhesive</a></li>  
-                                                <li><a href="printednonadhesive.php">Non-Adhesive</a></li>  
-                                            </ul>
-                                        </li>
-                                        <li class="tm-header-nav-dropdown"><a href="#">Non-Printed Bags</a>
-                                            <ul>  
-                                                <li><a href="nonprintedadhesive.php">Adhesive</a></li>  
-                                                <li><a href="nonprintednonadhesive.php">Non-Adhesive</a></li> 
-                                                <li><a href="#">Tropical Fish Bags</a>
-                                                    <ul>
-                                                        <li><a href="cornersealbags.php">Corner Seal Bags</a></li>  
-                                                        <li><a href="bluecover.php">Blue Cover Corner Bags</a></li> 
-                                                        <li><a href="squarebottom.php">Square Bottom Bags</a></li>
-                                                    </ul>
-                                                </li> 										 
+                                            <?php foreach($allCategories as $category): ?>
+                                                <li><a href="<?php echo site_url("category/".$category['slug']); ?>"><?php echo $category['title']; ?></a></li>
+                                            <?php endforeach; ?> 
                                             </ul>
                                         </li>
                                         

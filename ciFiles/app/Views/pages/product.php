@@ -116,7 +116,6 @@
 <script>
     $("a#atc-button").click(function (e) { 
         e.preventDefault();
-        alert("Clicked");
         let pid = '<?php echo $focusProduct["id"]; ?>';
         let qty = $("input#qtyBox").val();
        

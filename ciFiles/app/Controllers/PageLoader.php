@@ -73,6 +73,16 @@ class PageLoader extends BaseController
 		$this->page_loader("cart",$data);
 	}
 
+	public function customer_login($error=""){
+		$data = array("title"=>"Customer Login","error" => $error);
+		$this->page_loader("customerLogin",$data);
+	}
+
+	public function my_account($success="",$error=""){
+		$data = array("title"=>"My Account","error" => $error,"success"=>$success);
+		$this->page_loader("my_account",$data);
+	}
+
 
 	// Admin Pages
 	public function dashboard(){

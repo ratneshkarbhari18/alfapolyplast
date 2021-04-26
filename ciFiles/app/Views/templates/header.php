@@ -80,7 +80,11 @@
                                             <?php endforeach; ?> 
                                             </ul>
                                         </li>
-                                        
+                                        <?php $session = session(); if ($session->get("role")=="customer"): ?>
+                                        <li><a href="<?php echo site_url("my-account"); ?>">My Account</a></li>
+                                        <?php else: ?>
+                                        <li><a href="<?php echo site_url("login"); ?>">Login</a></li>
+                                        <?php endif; ?>
                                         <li><a href="<?php echo site_url("cart"); ?>">Cart</a></li>
                                     </ul>
                                 </nav>

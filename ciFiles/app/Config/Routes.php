@@ -39,10 +39,13 @@ $routes->get("admin-login","PageLoader::admin_login");
 $routes->get("product/(:any)","PageLoader::product/$1");
 $routes->get("category/(:any)","PageLoader::category/$1");
 $routes->get("cart","PageLoader::cart_page");
+$routes->get("login","PageLoader::customer_login");
+$routes->get("my-account","PageLoader::my_account");
 
 // Authentication
 $routes->post("admin-login-exe","Authentication::admin_login");
 $routes->get("logout","Authentication::logout");
+$routes->post("customer-login-exe","Authentication::customer_login");
 
 // cart endpoints
 $routes->post("atc-endpoint","Cart::add");

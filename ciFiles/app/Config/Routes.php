@@ -37,10 +37,14 @@ $routes->setAutoRoute(true);
 $routes->get('/', 'PageLoader::home');
 $routes->get("admin-login","PageLoader::admin_login");
 $routes->get("product/(:any)","PageLoader::product/$1");
+$routes->get("category/(:any)","PageLoader::category/$1");
 
 // Authentication
 $routes->post("admin-login-exe","Authentication::admin_login");
 $routes->get("logout","Authentication::logout");
+
+// cart endpoints
+$routes->post("atc-endpoint","Cart::add");
 
 // Admin Pages
 $routes->get("dashboard","PageLoader::dashboard");

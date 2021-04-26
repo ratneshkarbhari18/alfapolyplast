@@ -47,6 +47,16 @@ class PageLoader extends BaseController
 		$this->page_loader("product",$data);
 	}
 
+	public function category($slug)
+	{
+		$productModel = new ProductModel();
+		$categoryModel = new CategoryModel();
+		$catDetails  = $categoryModel->where("slug",$slug)->first();
+		$allProducts = $productModel->where("category",$catDetails["id"])->findAll();
+		$data = array("title"=>$catDetails['title'],"products"=>$allProducts);
+		$this->page_loader("category",$data);
+	}
+
 	public function admin_login($error="")
 	{
 		$data = array("title"=>"Admin Login","error" => $error);

@@ -19,6 +19,7 @@
     </head>
 
     <body>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
         <!-- Preloader -->
         <div class="tm-preloader">
@@ -80,7 +81,7 @@
                                             </ul>
                                         </li>
                                         
-                                        <li><a href="contact.php">Contact Us</a></li>
+                                        <li><a href="<?php echo site_url("cart"); ?>">Cart</a></li>
                                     </ul>
                                 </nav>
                                 <!--<ul class="tm-header-utils">

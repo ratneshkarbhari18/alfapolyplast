@@ -71,11 +71,13 @@
                                         <li>Product ID: 100</li>
                                         <li>Available: <span class="color-theme">In stock</span></li>
                                     </ul>
+                                    <p id="success-message" class="text-success"></p>
+                                    <p id="error-message" class="text-danger"></p>
                                     <div class="tm-prodetails-quantitycart">
                                         <div class="tm-quantitybox">
-                                            <input type="text" value="1">
+                                            <input type="text" id="qtyBox" value="1">
                                         </div>
-                                        <a href="#" class="tm-button tm-button-dark">Add To Cart</a>
+                                        <a href="#" id="atc-button" class="tm-button tm-button-dark">Add To Cart</a>
                                     </div>
 
                                     <div class="tm-prodetails-paras">
@@ -111,3 +113,34 @@
         margin-top: 16vh;
     }
 </style>
+<script>
+    $("a#atc-button").click(function (e) { 
+        e.preventDefault();
+        alert("Clicked");
+        let pid = '<?php echo $focusProduct["id"]; ?>';
+        let qty = $("input#qtyBox").val();
+        let cid = '<?php if (isset($_SESSION["first_name"])) {
+            echo $_SESSION["id"];
+        } else {
+            echo '0';
+        }
+         ?>';
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url("atc-endpoint"); ?>",
+            data: {
+                "pid": pid,
+                "qty" : qty,
+                "cid" : cid
+            },
+            success: function (response) {
+                console.log(response);
+                if (response=="added-to-cart") {
+                    $("p#success-message").html("Product Added to Cart");
+                }else{
+                    $("p#error-message").html("Product Not Added to Cart");
+                }                
+            }
+        });
+    });
+</script>

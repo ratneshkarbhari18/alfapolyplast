@@ -95,7 +95,7 @@
                                 <p class="tm-footer-copyright">© 2021 Alfa Poly Plast. All Right Reserved.</p>
                             </div>
                             <div class="col-md-5">
-                                <div class="tm-footer-payment">
+                                <div class="tm-footer-payment d-none">
                                     <!--<img src="assets/images/payment-methods.png" alt="payment methods">-->Designed & Developed By <a href="https://codesevaco.tech" style="color:#34A5B3;">Code Seva Co.</a>
                                 </div>
                             </div>

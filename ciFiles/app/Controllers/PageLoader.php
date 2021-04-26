@@ -74,7 +74,7 @@ class PageLoader extends BaseController
 	}
 
 	public function customer_login($error=""){
-		$data = array("title"=>"Customer Login","error" => $error);
+		$data = array("title"=>"Login","error" => $error);
 		$this->page_loader("customerLogin",$data);
 	}
 

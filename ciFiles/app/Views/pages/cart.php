@@ -1,4 +1,7 @@
 
+    <script src="https://www.paypal.com/sdk/js?client-id=AXJ05U_ZAnDm_s8tV6-crx3WMzJtHGCnJyyyUPndTkz_NrsJEScRFLNTyEwmX1jW8CD_wQQh-UEBHjkv">
+    </script>
+
         <!-- Page Content -->
         <main class="page-content">
 
@@ -116,7 +119,8 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                    <a href="#" class="tm-button tm-button-dark">Proceed To Checkout</a>
+                                    <div id="paypal-button-container"></div>
+
                                 </div>
                             </div>
                         </div>
@@ -148,3 +152,21 @@
                 });
             });
         </script>
+        <script>
+      paypal.Buttons({
+        createOrder: function(data, actions) {
+          return actions.order.create({
+            purchase_units: [{
+              amount: {
+                value: '<?php echo $cartTotal; ?>'
+              }
+            }]
+          });
+        },
+        onApprove: function(data, actions) {
+          return actions.order.capture().then(function(details) {
+            alert('Transaction completed by ' + details.payer.name.given_name);
+          });
+        }
+      }).render('#paypal-button-container'); // Display payment options on your web page
+    </script>

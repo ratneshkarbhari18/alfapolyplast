@@ -55,6 +55,7 @@ $routes->post("delete-category-exe","Categories::delete");
 // Product Routes
 $routes->post("add-product-exe","Products::add");
 $routes->post("update-product-exe","Products::update");
+$routes->post("delete-product-exe","Products::delete");
 
 
 /*

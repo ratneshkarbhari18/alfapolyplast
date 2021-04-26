@@ -195,16 +195,20 @@ class Products extends BaseController
 
     public function delete(){
         $this->auth_checker();
-        $catId = $this->request->getPost("id");
+        $prodId = $this->request->getPost("id");
         $productModel = new ProductModel();
-        $prevProdDetails = $productModel->find($catId);
-        $deleted = $productModel->delete($catId);
+        $prevProdDetails = $productModel->find($prodId);
+        $deleted = $productModel->delete($prodId);
         $pageLoader = new PageLoader();
         if ($deleted) {
-            unlink("./assets/images/category_featured/".$prevCatDetails["featured_image"]);
-            $pageLoader->manage_categories("Category Deleted","");
+            unlink("./assets/images/product_featured/".$prevCatDetails["featured_image"]);
+            $galleryImages = json_decode($prevProdDetails["gallery_images"],TRUE);
+            foreach ($galleryImages as $galleryImage) {
+                unlink("./assets/images/gallery_product/".$galleryImage);
+            }
+            $pageLoader->manage_products("Product Deleted","");
         } else {
-            $pageLoader->manage_categories("","Category not deleted");
+            $pageLoader->manage_products("","Product not deleted");
         }        
     }
 

@@ -1,5 +1,5 @@
 
-    <script src="https://www.paypal.com/sdk/js?client-id=AXJ05U_ZAnDm_s8tV6-crx3WMzJtHGCnJyyyUPndTkz_NrsJEScRFLNTyEwmX1jW8CD_wQQh-UEBHjkv">
+    <script src="https://www.paypal.com/sdk/js?client-id=AeU1iykNOH6inyJmrPUF6eVr819Zrp0cpdwHNJl0jYma6Z6A0trQ9UXRIzy1T7eKIRo4DC1Xq3ZiD_wK">
     </script>
 
         <!-- Page Content -->

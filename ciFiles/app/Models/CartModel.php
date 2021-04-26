@@ -9,7 +9,7 @@ class CartModel extends Model
 
     protected $primaryKey = 'id';
 
-    protected $allowedFields = ['qty','pid','ip','cid'];
+    protected $allowedFields = ['qty','pid','ip'];
 
 
 }

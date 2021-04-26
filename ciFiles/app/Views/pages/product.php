@@ -119,19 +119,13 @@
         alert("Clicked");
         let pid = '<?php echo $focusProduct["id"]; ?>';
         let qty = $("input#qtyBox").val();
-        let cid = '<?php if (isset($_SESSION["first_name"])) {
-            echo $_SESSION["id"];
-        } else {
-            echo '0';
-        }
-         ?>';
+       
         $.ajax({
             type: "POST",
             url: "<?php echo site_url("atc-endpoint"); ?>",
             data: {
                 "pid": pid,
                 "qty" : qty,
-                "cid" : cid
             },
             success: function (response) {
                 console.log(response);

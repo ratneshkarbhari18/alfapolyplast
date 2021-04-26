@@ -10,7 +10,6 @@ class Cart extends BaseController
         $pid = $this->request->getPost("pid");
         $qty = $this->request->getPost("qty");
         $ip = $_SERVER['REMOTE_ADDR'];
-        $cid = $this->request->getPost("cid");
         $cartModel = new CartModel();
         $cartItemExists = $cartModel->where("pid",$pid)->where("ip",$ip)->first();
         if ($cartItemExists) {
@@ -20,7 +19,6 @@ class Cart extends BaseController
             $objToInsert = array(
                 "pid" => $pid,
                 "qty" => $qty,
-                "cid" => $cid,
                 "ip" => $ip
             );
             $done = $cartModel->insert($objToInsert);
@@ -29,6 +27,17 @@ class Cart extends BaseController
             return 'added-to-cart';
         } else {
             return FALSE;
+        }
+        
+    }
+    public function delete(){
+        $cartModel = new CartModel();
+        $cartItemId = $this->request->getPost("cart_item_id");
+        $deleted = $cartModel->delete($cartItemId);
+        if ($deleted) {
+            return "deleted";
+        } else {
+            return "not-deleted";
         }
         
     }

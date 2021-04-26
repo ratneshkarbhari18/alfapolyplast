@@ -3,6 +3,7 @@
 namespace App\Controllers;
 use App\Models\CategoryModel;
 use App\Models\ProductModel;
+use App\Models\CartModel;
 
 class PageLoader extends BaseController
 {
@@ -61,6 +62,15 @@ class PageLoader extends BaseController
 	{
 		$data = array("title"=>"Admin Login","error" => $error);
 		$this->page_loader("adminLogin",$data);
+	}
+
+	public function cart_page($success="",$error=""){
+		$cartModel = new CartModel();
+		$productModel = new ProductModel();
+		$cart_items = $cartModel->where("ip",$_SERVER["REMOTE_ADDR"])->findAll();
+		$allProducts = $productModel->findAll();
+		$data = array("title"=>"Cart","success"=>$success,"error"=>$error,"cartItems"=>$cart_items,"products"=>$allProducts);
+		$this->page_loader("cart",$data);
 	}
 
 

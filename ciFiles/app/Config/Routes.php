@@ -43,11 +43,16 @@ $routes->get("dashboard","PageLoader::dashboard");
 $routes->get("manage-categories","PageLoader::manage_categories");
 $routes->get("add-category","PageLoader::add_category");
 $routes->get("edit-category/(:any)","PageLoader::edit_category/$1");
+$routes->get("manage-products","PageLoader::manage_products");
+$routes->get("add-product","PageLoader::add_product");
 
 // Category Routes
 $routes->post("add-category-exe","Categories::add");
 $routes->post("update-category-exe","Categories::update");
 $routes->post("delete-category-exe","Categories::delete");
+
+// Product Routes
+$routes->post("add-product-exe","Products::add");
 
 
 /*

@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 use App\Models\CategoryModel;
+use App\Models\ProductModel;
 
 class PageLoader extends BaseController
 {
@@ -59,5 +60,20 @@ class PageLoader extends BaseController
 		$category = $categoryModel->where("slug",$slug)->first();
 		$data = array("title"=>"Edit Category","success"=>$success,"error"=>$error,"category"=>$category);
 		$this->admin_page_loader("edit_category",$data);
+	}
+	public function manage_products($success="",$error=""){
+		$this->auth_checker();
+		$productModel = new ProductModel();
+        $products = $productModel->findAll();
+		$data = array("title"=>"Manage Products","success"=>$success,"error"=>$error,"products"=>$products);
+		$this->admin_page_loader("manage_products",$data);		
+	}
+
+	public function add_product($success="",$error=""){
+		$this->auth_checker();
+		$categoryModel = new CategoryModel();
+		$allCategories = $categoryModel->findAll();
+		$data = array("title"=>"Add Product","success"=>$success,"error"=>$error);
+		$this->admin_page_loader("add_product",$data);
 	}
 }

@@ -7,13 +7,13 @@
     
         <p class="text-success"><?php echo $success; ?></p>
 
-        <a href="<?php echo site_url('add-category'); ?>" class="btn btn-success">+ Add Category</a>
+        <a href="<?php echo site_url('add-product'); ?>" class="btn btn-success">+ Add Product</a>
 
 
         <div class="items-container">
         
         
-        <?php if(count($categories)>0): ?>
+        <?php if(count($products)>0): ?>
 
             <div class="table-responsive">
                 <table class="table" style="margin-top: 5%;">
@@ -25,15 +25,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach($categories as $category): ?>
+                        <?php foreach($products as $product): ?>
                         <tr>
-                            <td><?php echo $category['title']; ?></td>
-                            
-                            <td><?php echo $category['description']; ?></td>
+                            <td><?php echo $product['title']; ?></td>
+                            <td><?php echo $product['description']; ?></td>
                             <td>
-                                <a class="btn btn-primary" href="<?php echo site_url('edit-category/'.$category['slug']); ?>">Edit</a>
-                                <form action="<?php echo site_url('delete-category-exe'); ?>" style="display: inline;" method="post">
-                                    <input type="hidden" name="id" value="<?php echo $category['id']; ?>">
+                                <a class="btn btn-primary" href="<?php echo site_url('edit-product/'.$product['slug']); ?>">Edit</a>
+                                <form action="<?php echo site_url('delete-product-exe'); ?>" style="display: inline;" method="post">
+                                    <input type="hidden" name="id" value="<?php echo $product['id']; ?>">
                                     <button type="submit" class="btn btn-danger">Delete</button>
                                 </form>
                             </td>
@@ -45,7 +44,7 @@
 
         <?php else: ?>
 
-            <h6>No Categories Added</h6>
+            <h6 >No Products Added</h6>
 
         <?php endif; ?>
 

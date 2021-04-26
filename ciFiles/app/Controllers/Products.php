@@ -1,10 +1,10 @@
 <?php
 
 namespace App\Controllers;
-use App\Models\CategoryModel;
+use App\Models\ProductModel;
 use App\Controllers\PageLoader;
 
-class Categories extends BaseController
+class Products extends BaseController
 {
 
 
@@ -23,7 +23,7 @@ class Categories extends BaseController
         
 
         $pageLoader = new PageLoader();
-        $categoryModel = new CategoryModel();
+        $productModel = new ProductModel();
 
         if ($this->request->getPost("slug")) {
             $slug = url_title($this->request->getPost("slug"),"-",TRUE);    
@@ -31,9 +31,9 @@ class Categories extends BaseController
             $slug = url_title($this->request->getPost("title"),"-",TRUE);    
         }
         
-        $categoryExists = $categoryModel->where('slug',$slug)->first();
+        $productExists = $productModel->where('slug',$slug)->first();
 
-        if ($categoryExists) {
+        if ($productExists) {
             $pageLoader->add_category("","This slug already exists");
         } else {
 
@@ -49,17 +49,48 @@ class Categories extends BaseController
                 $featuredImageRandomName = "noimage.png";
             }
 
+            $galleryImageNames = array();
+
+            $galleryImages = $this->request->getFilemULTIPLE('gallery_images');
+
+			foreach ($galleryImages as $galleryImage) {
+
+				$galleryImageRandomName = $galleryImage->getRandomName();
+
+				$galleryImage->move('assets/images/gallery_product', $galleryImageRandomName);
+
+				$galleryImageNames[] = $galleryImageRandomName;
+
+			}
+
+            $galleryImageNamesJson = json_encode($galleryImageNames);
+
+            $pricingObj = array(
+                "na" => $this->request->getPost("price_na"),
+                "in" => $this->request->getPost("price_in"),
+                "sa" => $this->request->getPost("price_sa"),
+                "au" => $this->request->getPost("price_au"),
+                "uk" => $this->request->getPost("price_uk"),
+                "jp" => $this->request->getPost("price_jp"),
+                "saf" => $this->request->getPost("price_saf"),
+                "eu" => $this->request->getPost("price_eu")
+            );
+
+            $pricesJson = json_encode($pricingObj);
+
             $objToInsert = array(
                 "title" => $this->request->getPost("title"),
                 "slug" => $slug,
                 "description" => $this->request->getPost("description"),
-                "featured_image" => $featuredImageRandomName
+                "featured_image" => $featuredImageRandomName,
+                "gallery_images" => $galleryImageNamesJson,
+                "prices" => $pricesJson
             );  
 
-            if ($categoryModel->insert($objToInsert)) {
-                $pageLoader->add_category("Category Added Successfully","");
+            if ($productModel->insert($objToInsert)) {
+                $pageLoader->add_product("Product Added Successfully","");
             } else {
-                $pageLoader->add_category("","Category Not added");
+                $pageLoader->add_product("","Product Not added");
             }
         }
 

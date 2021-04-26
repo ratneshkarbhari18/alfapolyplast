@@ -50,4 +50,10 @@ class Authentication extends BaseController
         
     }
 
+    public function logout(){
+        $session = session();   
+        $session->destroy();
+        return redirect()->to(site_url('')); 
+    }
+
 }

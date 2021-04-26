@@ -37,6 +37,7 @@ $routes->get("admin-login","PageLoader::admin_login");
 
 // Authentication
 $routes->post("admin-login-exe","Authentication::admin_login");
+$routes->post("logout","Authentication::logout");
 
 // Admin Pages
 $routes->get("dashboard","PageLoader::dashboard");
